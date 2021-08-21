@@ -1,7 +1,6 @@
-from dataclasses import dataclass
-
-@dataclass
 class Leaf:
     UID = None
+    name = None
     mother = None
     father = None
+
