@@ -1,0 +1,8 @@
+class Expression_Tree:
+    root = None
+    level = 0
+
+    def __init__(self, exp):
+        pass
+
+    def 
