@@ -27,17 +27,22 @@ def precedence(c):
         return 3
     else:
         return 0
-        
+def split(word):
+    return [char for char in word]
+    
 def infixToPost(exp):
     stack = Stack()
     stack.push('#')
     output = []
-    for c in exp.split():
-        if (c.isnumeric() or c.isalpha()):
+
+    splitExp = split(exp)
+    
+    for c in splitExp:
+        if(c == ' '):
+            pass
+        elif (c.isnumeric() or c.isalpha()):
             output.append(c)
         elif (c == '('):
-            stack.push(c)
-        elif (c == '^'):
             stack.push(c)
         elif (c == ')'):
             while (not stack.isEmpty() and stack.peek() != '('):
@@ -45,14 +50,10 @@ def infixToPost(exp):
                 output.append(item)
             stack.pop()
         else:
-            if(precedence(c) > precedence(stack.peek())):
-                stack.push(c)
-            else:
-                while (not stack.isEmpty() and precedence(c) <= precedence(stack.peek())):
-                    item = stack.pop()
-                    output.append(item)
+            while (not stack.isEmpty() and precedence(c) <= precedence(stack.peek())):
+                output.append(stack.pop())
 
-                output.append(c)
+            stack.push(c)
     while (stack.peek() != '#'):
         output.append(stack.peek())
         stack.pop()
