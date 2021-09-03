@@ -27,13 +27,27 @@ def precedence(c):
         return 3
     else:
         return 0
+
 def split(word):
     return [char for char in word]
+
+def parseToBar(exp):
+    outputList = []
+    for c in exp:
+        if(c.isnumeric() or c.isalpha()):
+            outputList.append('|')
+            outputList.append(c)
+            outputList.append('|')
+        else:
+            outputList.append(c)
+    outputList = "".join(outputList)
+    return outputList
     
 def infixToPost(exp):
     stack = Stack()
     stack.push('#')
     output = []
+    outputWithBars = []
 
     splitExp = split(exp)
     
@@ -58,4 +72,6 @@ def infixToPost(exp):
         output.append(stack.peek())
         stack.pop()
     outputJoin = ''.join(output)
-    return outputJoin
+    outputWithBars = parseToBar(outputJoin)
+
+    return outputWithBars
