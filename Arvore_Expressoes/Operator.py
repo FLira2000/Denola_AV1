@@ -1,7 +1,5 @@
-import Element
-
-class Operator(Element):
-    def __init__(self, op, l, r):
+class Operator():
+    def __init__(self, op, l = None, r = None):
         
         if op not in ['+','-','/','*']:
             raise Exception(f"Invalid operation selected for Operator. '{op}' not supported. ")
@@ -10,12 +8,15 @@ class Operator(Element):
         self.l = l
         self.r = r
 
-    def eval():
+    def val(self):
+        if self.l == None or self.r == None:
+            raise Exception('No operands to perform the operation.')
+        
         cases = {
-            '/': self.l.eval() / self.r.eval(),
-            '*': self.l.eval() * self.r.eval(),
-            '+': self.l.eval() + self.r.eval(),
-            '-': self.l.eval() - self.r.eval()
+            '/': self.l.val() / self.r.val(),
+            '*': self.l.val() * self.r.oval(),
+            '+': self.l.val() + self.r.val(),
+            '-': self.l.val() - self.r.val()
         }
 
         return cases[op]

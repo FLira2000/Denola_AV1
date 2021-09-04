@@ -1,3 +1,0 @@
-class Element:
-    value = None
-    
