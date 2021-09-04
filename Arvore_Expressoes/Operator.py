@@ -14,10 +14,10 @@ class Operator():
         
         cases = {
             '/': self.l.val() / self.r.val(),
-            '*': self.l.val() * self.r.oval(),
+            '*': self.l.val() * self.r.val(),
             '+': self.l.val() + self.r.val(),
             '-': self.l.val() - self.r.val()
         }
 
-        return cases[op]
+        return cases[self.op]
         
