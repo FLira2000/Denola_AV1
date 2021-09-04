@@ -1,5 +1,4 @@
 from typings import List
-import Element
 
 class Expression_Tree:
     root = None
@@ -8,7 +7,7 @@ class Expression_Tree:
 
     def __init__(self, exp: str):
         exp = self._parser(exp)
-        self.insert_element
+        #self.insert_element
 
     def insert_element(self, op, elm):
         pass
