@@ -42,7 +42,68 @@ def parseToBar(exp):
             outputList.append(c)
     outputList = "".join(outputList)
     return outputList
+
+def runWhile(exp, x):
+    outputList = []
+    outputList.append('|')
+
+    for c in exp:
+        if(c.isnumeric() or c.isalpha()):
+            outputList.append(c)
+            
+        else:
+            break
+        outputList.append('|')
+    return outputList
+
+
+def infixToPostWithWhile(exp):
+    stack = Stack()
+    stack.push('#')
+
+    output = []
+
+    splitExp = split(exp)
+    length = len(splitExp)
+    op = 0
     
+    while op < len(exp):
+        if(splitExp[op] == ' '):
+            op += 1
+        elif(splitExp[op].isnumeric() or splitExp[op].isalpha()):
+            strp = ''
+            while(splitExp[op].isnumeric() or splitExp[op].isalpha()):
+                strp += splitExp[op]
+                op+=1
+                if(op == len(exp)):
+                    break
+
+            output.append('|')
+            output.append(strp)
+            output.append('|')
+            
+        elif (splitExp[op] == '('):
+            stack.push(splitExp[op])
+            op += 1
+        elif (splitExp[op] == ')'):
+            while (not stack.isEmpty() and stack.peek() != '('):
+                item = stack.pop()
+                output.append(item)
+            stack.pop()
+            op += 1
+        else:
+            while (not stack.isEmpty() and precedence(splitExp[op]) <= precedence(stack.peek())):
+                output.append(stack.pop())
+            stack.push(splitExp[op])
+            op += 1
+    while (stack.peek() != '#'):
+           output.append(stack.peek())
+           stack.pop()
+    outputJoin = ''.join(output)
+
+    return outputJoin
+
+
 def infixToPost(exp):
     stack = Stack()
     stack.push('#')
@@ -50,7 +111,7 @@ def infixToPost(exp):
     outputWithBars = []
 
     splitExp = split(exp)
-    
+  
     for c in splitExp:
         if(c == ' '):
             pass
@@ -66,7 +127,6 @@ def infixToPost(exp):
         else:
             while (not stack.isEmpty() and precedence(c) <= precedence(stack.peek())):
                 output.append(stack.pop())
-
             stack.push(c)
     while (stack.peek() != '#'):
         output.append(stack.peek())
