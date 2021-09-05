@@ -31,23 +31,13 @@ def precedence(c):
 def split(word):
     return [char for char in word]
 
-def parseToBar(exp):
-    outputList = []
-    for c in exp:
-        outputList.append('|')
-        outputList.append(c)
-        outputList.append('|')
-    outputList = "".join(outputList)
-    return outputList
-
-def infixToPostModule(exp):
+def infixToPostList(exp):
     stack = Stack()
     stack.push('#')
 
     output = []
 
     splitExp = split(exp)
-    length = len(splitExp)
     op = 0
     
     while op < len(exp):
@@ -60,7 +50,6 @@ def infixToPostModule(exp):
                 op+=1
                 if(op == len(exp)):
                     break
-                
             output.append(strp)
             
         elif (splitExp[op] == '('):
@@ -83,33 +72,44 @@ def infixToPostModule(exp):
 
     return output
 
-
 def infixToPost(exp):
     stack = Stack()
     stack.push('#')
+
     output = []
-    outputWithBars = []
 
     splitExp = split(exp)
-  
-    for c in splitExp:
-        if(c == ' '):
-            pass
-        elif (c.isnumeric() or c.isalpha()):
-            output.append(c)
-        elif (c == '('):
-            stack.push(c)
-        elif (c == ')'):
+    op = 0
+    
+    while op < len(exp):
+        if(splitExp[op] == ' '):
+            op += 1
+        elif(splitExp[op].isnumeric() or splitExp[op].isalpha()):
+            strp = ''
+            while(splitExp[op].isnumeric() or splitExp[op].isalpha()):
+                strp += splitExp[op]
+                op+=1
+                if(op == len(exp)):
+                    break
+            output.append(strp)
+            
+        elif (splitExp[op] == '('):
+            stack.push(splitExp[op])
+            op += 1
+        elif (splitExp[op] == ')'):
             while (not stack.isEmpty() and stack.peek() != '('):
                 item = stack.pop()
                 output.append(item)
             stack.pop()
+            op += 1
         else:
-            while (not stack.isEmpty() and precedence(c) <= precedence(stack.peek())):
+            while (not stack.isEmpty() and precedence(splitExp[op]) <= precedence(stack.peek())):
                 output.append(stack.pop())
-            stack.push(c)
+            stack.push(splitExp[op])
+            op += 1
     while (stack.peek() != '#'):
-        output.append(stack.peek())
-        stack.pop()
+           output.append(stack.peek())
+           stack.pop()
+    outputJoin = ''.join(output)
 
-    return output
+    return outputJoin
