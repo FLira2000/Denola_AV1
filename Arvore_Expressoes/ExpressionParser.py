@@ -120,7 +120,5 @@ def infixToPost(exp):
     while (stack.peek() != '#'):
         output.append(stack.peek())
         stack.pop()
-    outputJoin = ''.join(output)
-    outputWithBars = parseToBar(outputJoin)
 
-    return outputWithBars
+    return output
