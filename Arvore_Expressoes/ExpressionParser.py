@@ -60,10 +60,8 @@ def infixToPostModule(exp):
                 op+=1
                 if(op == len(exp)):
                     break
-
-            output.append('|')
+                
             output.append(strp)
-            output.append('|')
             
         elif (splitExp[op] == '('):
             stack.push(splitExp[op])
@@ -71,26 +69,19 @@ def infixToPostModule(exp):
         elif (splitExp[op] == ')'):
             while (not stack.isEmpty() and stack.peek() != '('):
                 item = stack.pop()
-                output.append('|')
                 output.append(item)
-                output.append('|')
             stack.pop()
             op += 1
         else:
             while (not stack.isEmpty() and precedence(splitExp[op]) <= precedence(stack.peek())):
-                output.append('|')
                 output.append(stack.pop())
-                output.append('|')
             stack.push(splitExp[op])
             op += 1
     while (stack.peek() != '#'):
-           output.append('|')
            output.append(stack.peek())
-           output.append('|')
            stack.pop()
-    outputJoin = ''.join(output)
 
-    return outputJoin
+    return output
 
 
 def infixToPost(exp):
