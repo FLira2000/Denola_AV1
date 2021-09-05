@@ -34,30 +34,13 @@ def split(word):
 def parseToBar(exp):
     outputList = []
     for c in exp:
-        if(c.isnumeric() or c.isalpha()):
-            outputList.append('|')
-            outputList.append(c)
-            outputList.append('|')
-        else:
-            outputList.append(c)
+        outputList.append('|')
+        outputList.append(c)
+        outputList.append('|')
     outputList = "".join(outputList)
     return outputList
 
-def runWhile(exp, x):
-    outputList = []
-    outputList.append('|')
-
-    for c in exp:
-        if(c.isnumeric() or c.isalpha()):
-            outputList.append(c)
-            
-        else:
-            break
-        outputList.append('|')
-    return outputList
-
-
-def infixToPostWithWhile(exp):
+def infixToPostModule(exp):
     stack = Stack()
     stack.push('#')
 
@@ -88,16 +71,22 @@ def infixToPostWithWhile(exp):
         elif (splitExp[op] == ')'):
             while (not stack.isEmpty() and stack.peek() != '('):
                 item = stack.pop()
+                output.append('|')
                 output.append(item)
+                output.append('|')
             stack.pop()
             op += 1
         else:
             while (not stack.isEmpty() and precedence(splitExp[op]) <= precedence(stack.peek())):
+                output.append('|')
                 output.append(stack.pop())
+                output.append('|')
             stack.push(splitExp[op])
             op += 1
     while (stack.peek() != '#'):
+           output.append('|')
            output.append(stack.peek())
+           output.append('|')
            stack.pop()
     outputJoin = ''.join(output)
 
