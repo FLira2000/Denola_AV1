@@ -17,3 +17,8 @@ program
 # OTHER FILES
 
 .DS_Store
+
+#EMACS FILES
+
+*.*~
+
