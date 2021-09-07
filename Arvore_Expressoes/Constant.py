@@ -4,5 +4,5 @@ class Constant():
         self.cons = cons
 
     def val(self):
-        return self.cons
+        return int(self.cons)
 
