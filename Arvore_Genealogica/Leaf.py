@@ -1,6 +1,4 @@
-from random import random
-
-class Leaf:
+class Member:
     def __init__(self, founder):
         self.name = founder
         self.parent = None         
