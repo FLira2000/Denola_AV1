@@ -125,22 +125,26 @@ def print_tree(node, level=0):
 
 def count_words_file(path_file):
     counter = 0
-    with open(path_file, 'r') as f:
+    with open(path_file, 'r', encoding='utf-8') as f:
         for line in f:
             for word in line.split():
                 counter += 1
     return counter
 
 def return_word(path, index):
-    f = open(path)
-    seperate = list(f.read().split(" "))
+    f = open(path, encoding='utf-8')
+    seperate = list(f.read().lower().split('\n'))
+    seperate = list(filter(None, seperate))
+    seperate = [words for segments in seperate for words in segments.split()]
     f.close()
-    return seperate[index]
+    return seperate[index-1].strip()
 
 def search(root, key):
     if root is None:
         return 'Not found'
     elif root.value == key:
+        print()
+        print('Word found: ')
         return root.value
 
     # Value is greater than root's key
@@ -150,15 +154,59 @@ def search(root, key):
     # Value is smaller than root's key
     return search(root.left, key)
 
-pathWord = 'C:/Users/usr1/Desktop/words.txt'
-Tree = AVL()
-rt = None
-counter = count_words_file(pathWord)
-i = 0
-while(i < counter):
-    
-    rt = Tree.insert(return_word(pathWord, i), rt)
-    i += 1
-print_tree(rt)
-print('Seaching word: pao')
-print(' ', search(rt,'pao'))
+def menu():
+    option = None
+    Tree = None
+    rt = None
+    pathFile = ''
+
+    while(option != 0):
+        print('Choose one option: ')
+        print('1 - Load default file')
+        print('2 - Load custom file with path')
+        print('3 - Print the AVL tree')
+        print('4 - Search word in tree')
+        print('0 - To end the program')
+
+        option = input()      
+        
+        if (option == '1'):     
+            Tree = AVL()
+            rt = None
+            pathFile = 'words.txt'
+            print(pathFile, ' file uploaded')
+            counter = count_words_file(pathFile)
+            i = 0
+            while (i < counter):
+                rt = Tree.insert(return_word(pathFile, i), rt)
+                i += 1
+        elif option == '2':
+            Tree = AVL()
+            rt = None
+            print('If you want to load the default file, write: \'Default\' ')
+            pathFile = input()
+            pathFile = pathFile.lower()
+            if(pathFile == 'default'):
+                pathFile = 'ideas.txt'
+            print(pathFile, ' file uploaded')
+            counter = count_words_file(pathFile)
+            i = 0
+            while (i < counter):
+                rt = Tree.insert(return_word(pathFile, i), rt)
+                i += 1
+        elif (option == '3'):
+            if Tree == None:
+                print('Tree not created yet')
+            else:
+                print_tree(rt)
+        elif (option == '4'):
+            if Tree == None:
+                print('Tree not created yet')
+            else:
+                print('Insert word to be searched: ')
+                word = input()
+                print(search(rt, word))
+        elif option == '0':
+            break
+   
+menu()
