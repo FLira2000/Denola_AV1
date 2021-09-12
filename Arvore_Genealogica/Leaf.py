@@ -1,23 +1,15 @@
 class Member:
-    def __init__(self, founder):
-        self.name = founder
-        self.parent = None         
-        self.children = []    
+    def __init__(self, name):
+        self.name = name
+        self.mother = None
+        self.father = None
 
     def __str__(self):
         return self.name    
 
-    def add_parent(self, mother):
-        self.parent = mother   
+    def add_parents(self, mother, father):
+        self.mother = mother
+        self.father = father
 
-    def get_parent(self):
-        return self.parent 
-
-    def is_parent(self, mother):
-        return self.parent == mother  
-
-    def add_child(self, child):
-        self.children.append(child)   
-
-    def is_child(self, child):
-        return child in self.children 
+    def get_parents(self):
+        return (self.mother, self.father)
