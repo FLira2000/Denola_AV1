@@ -1,27 +1,14 @@
 from Leaf import Member
+import json
 
 class GenTree:
-    def __init__(self, name):
-        self.root = Member(name)
-
-    def add_member():
-        pass
-
+    def __init__(self, name = None, file_path = None):
+        if file_path != None:
+            self.dict_to_tree(self.read_json(file_path)))
+        
+    def dict_to_tree(self, obj):
+        
+    
     def read_json(self, json_path):
-        #example =
-        #{
-        #    "fabio":
-        #    {
-        #        "fabio":
-        #        {
-        #            "penha": {},
-        #            _: None
-        #        },
-        #        "lanassa":
-        #        {
-        #            "zenaide": {},
-        #           _:  None
-        #        }
-        #    }
-        #}
-        pass
+        with open(json_path) as fl:
+            return json.load(fl)
