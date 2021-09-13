@@ -1,0 +1,25 @@
+{
+	"me": "fabio"
+	"mother": 
+	{
+		"me": "lanassa",
+		"mother": 
+		{
+			"me": "zenaide",
+			"mother": {},
+			"father": {}
+		},
+		"father": {}
+	},
+	"father": 
+	{
+		"me":  "fabio",
+		"mother": 
+		{
+			"me": "penha",
+			"mother": {},
+			"father": {}
+		},
+		"father": {}
+	}
+}
