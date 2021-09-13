@@ -5,6 +5,56 @@ class node:
         self.right = None
         self.height = 1
 
+    def display(self):
+        lines, *_ = self._display_aux()
+        for line in lines:
+            print(line)
+
+    def _display_aux(self):
+        #Returns list of strings, width, height, and horizontal coordinate of the root.
+        # No child.
+        if self.right is None and self.left is None:
+            line = '%s' % self.value
+            width = len(line)
+            height = 1
+            middle = width // 2
+            return [line], width, height, middle
+
+        # Only left child
+        if self.right is None:
+            lines, n, p, x = self.left._display_aux()
+            s = '%s' % self.value
+            u = len(s)
+            first_line = (x + 1) * ' ' + (n - x - 1) * '_' + s
+            second_line = x * ' ' + '/' + (n - x - 1 + u) * ' '
+            shifted_lines = [line + u * ' ' for line in lines]
+            return [first_line, second_line] + shifted_lines, n + u, p + 2, n + u // 2
+
+        # Only right child
+        if self.left is None:
+            lines, n, p, x = self.right._display_aux()
+            s = '%s' % self.value
+            u = len(s)
+            first_line = s + x * '_' + (n - x) * ' '
+            second_line = (u + x) * ' ' + '\\' + (n - x - 1) * ' '
+            shifted_lines = [u * ' ' + line for line in lines]
+            return [first_line, second_line] + shifted_lines, n + u, p + 2, u // 2
+
+        # Two children
+        left, n, p, x = self.left._display_aux()
+        right, m, q, y = self.right._display_aux()
+        s = '%s' % self.value
+        u = len(s)
+        first_line = (x + 1) * ' ' + (n - x - 1) * '_' + s + y * '_' + (m - y) * ' '
+        second_line = x * ' ' + '/' + (n - x - 1 + u + y) * ' ' + '\\' + (m - y - 1) * ' '
+        if p < q:
+            left += [n * ' '] * (q - p)
+        elif q < p:
+            right += [m * ' '] * (p - q)
+        zipped_lines = zip(left, right)
+        lines = [first_line, second_line] + [a + u * ' ' + b for a, b in zipped_lines]
+        return lines, n + m + u, max(p, q) + 2, n + u // 2
+
 
 class AVL:
 
@@ -115,7 +165,6 @@ class AVL:
         return Node
 
 
-
 def print_tree(node, level=0):
     if node != None:
         print_tree(node.left, level + 1)
@@ -174,7 +223,7 @@ def menu():
             Tree = AVL()
             rt = None
             pathFile = 'words.txt'
-            print(pathFile, ' file uploaded')
+            print('\n[', pathFile, '] file loaded\n')
             counter = count_words_file(pathFile)
             i = 0
             while (i < counter):
@@ -183,12 +232,9 @@ def menu():
         elif option == '2':
             Tree = AVL()
             rt = None
-            print('If you want to load the default file, write: \'Default\' ')
             pathFile = input()
             pathFile = pathFile.lower()
-            if(pathFile == 'default'):
-                pathFile = 'ideas.txt'
-            print(pathFile, ' file uploaded')
+            print('\n[', pathFile, '] file loaded\n')
             counter = count_words_file(pathFile)
             i = 0
             while (i < counter):
@@ -198,7 +244,7 @@ def menu():
             if Tree == None:
                 print('Tree not created yet')
             else:
-                print_tree(rt)
+                rt.display()
         elif (option == '4'):
             if Tree == None:
                 print('Tree not created yet')
