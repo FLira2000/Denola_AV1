@@ -1,47 +1,36 @@
-from Leaf import Leaf
+from Leaf import Member
+import json
 
 class GenTree:
-    root: None
-
-    def performInsertion(self, child: Leaf, parent: Leaf, pos):
-        if pos == 1:
-            child.mother = parent
-        elif pos == 2:
-            child.father = parent
-    
-    def searchLeaf(self, leafId) -> Leaf:
-        pass
-
-    def searchLeaf(self, childName) -> Leaf:
-        pass
-
-    def insertLeaf(self, parentLeaf, childLeafId = None, whichParent = 0):
-        if childLeafId != None:
-            self.performInsertion(child = self.searchLeaf(childLeafId), parent=parentLeaf, whichParent=whichParent)
-            return
-        else:
-            self.root = parentLeaf
-    
-    def insertLeaf(self, parentLeaf, childLeafName = None, whichParent = 0):
-        if childLeafName != None:
-            self.performInsertion(child = self.searchLeaf(childLeafName), parent=parentLeaf, whichParent=whichParent)
-            return
-        else:
-            self.root = parentLeaf
-    
-    def printTree(self, root = None):
-        if root == None:
-            self.root.printMyself()
-            if self.root.mother != None: 
-                self.printTree(self.root.mother)
+    def __init__(self, name = None, file_path = None):
+        if file_path != None:
+            self.build_from_file(file_path)
         
-            if self.root.father != None: 
-                self.printTree(self.root.father)
+    def dict_to_tree(self, obj):
+        if list(obj.keys()) != []:
+           return Member(obj['me'], self.dict_to_tree(obj['mother']), self.dict_to_tree(obj['father']))
         else:
-            root.printMyself()
-            if root.mother != None: 
-               self.printTree(root.mother)
-        
-            if root.father != None: 
-                self.printTree(root.father)
-                
+            return {}
+
+    def read_json(self, json_path):
+        with open(json_path) as fl:
+            return json.load(fl)
+
+    def build_from_file(self, filepath):
+        self.dct = self.read_json(filepath)
+        self.root = self.dict_to_tree(self.dct)
+
+    def export_to_file(self):
+        with open(f'tree_{self.root}.json', 'w') as fl:
+            fl.write(json.dumps(self.dct))
+
+    def print(self):
+        self.print_tree(self.root)
+    def print_tree(self, elm, lvl = 0):
+        if elm == {}:
+            return '*'
+        else:
+            self.print_tree(elm.mother, lvl=lvl+1)
+            print('   ' * lvl + '> ' + elm.name)
+            self.print_tree(elm.father, lvl=lvl+1)
+    

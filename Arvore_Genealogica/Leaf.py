@@ -1,16 +1,8 @@
-from random import random
+class Member:
+    def __init__(self, name, mother = None, father = None):
+        self.name = name
+        self.mother = mother
+        self.father = father
 
-class Leaf:
-    UID = None
-    name = None
-    mother = None
-    father = None
-
-    def __init__(self, leafName):
-        self.name = leafName
-        self.UID = round(random() * 100)
-
-    def printMyself(self):
-        print(self.name)
-        print('UID: ' + str(self.UID))
-
+    def __str__(self):
+        return self.name    
