@@ -1,2 +1,24 @@
+# C++ FILES
+
 program.exe
 program
+.o
+.obj
+.slo
+.lo
+.exe
+.so
+
+# VSCODE FILES
+
+.vscode
+/.vscode
+
+# OTHER FILES
+
+.DS_Store
+
+#EMACS FILES
+
+*.*~
+
