@@ -232,6 +232,7 @@ def menu():
         elif option == '2':
             Tree = AVL()
             rt = None
+            print('Input file path: ')
             pathFile = input()
             pathFile = pathFile.lower()
             print('\n[', pathFile, '] file loaded\n')
