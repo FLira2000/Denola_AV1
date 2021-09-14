@@ -10,7 +10,7 @@ def heapify(arr, n, i):
         largest = r
   
     if largest != i:
-        arr[i],arr[largest] = arr[largest],arr[i]  # swap
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
   
         # Heapify
         heapify(arr, n, largest)
