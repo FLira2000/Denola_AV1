@@ -22,3 +22,6 @@ program
 
 *.*~
 
+#PYTHON CACHE FOLDER
+
+__pycache__/
