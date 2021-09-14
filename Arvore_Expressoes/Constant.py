@@ -6,3 +6,6 @@ class Constant():
     def val(self):
         return int(self.cons)
 
+    def __str__(self):
+        return str(self.cons)
+
