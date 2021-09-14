@@ -33,3 +33,17 @@ class ExpressionTree:
             return None
         else:
             return self.root.val()
+
+    def print_tree(self, elm, lvl=0):            
+
+        if type(elm) == Constant:
+            print('   ' * lvl + '> ' + str(elm))
+        elif type(elm) == Operator:
+            self.print_tree(elm.l, lvl=lvl + 1)
+            print('   ' * lvl + '> ' + str(elm))
+            self.print_tree(elm.r, lvl=lvl + 1)
+        else:
+            return
+   
+    def print(self):
+        self.print_tree(self.root)

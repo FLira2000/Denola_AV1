@@ -29,3 +29,6 @@ class Operator():
         }
 
         return cases[self.op]
+
+    def __str__(self):
+        return str(self.op)
