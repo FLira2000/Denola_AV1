@@ -6,6 +6,3 @@ class Member:
 
     def __str__(self):
         return self.name    
-
-    def get_parents(self):
-        return (self.mother, self.father)

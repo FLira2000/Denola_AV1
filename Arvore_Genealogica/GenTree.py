@@ -24,5 +24,13 @@ class GenTree:
         with open(f'tree_{self.root}.json', 'w') as fl:
             fl.write(json.dumps(self.dct))
 
-    def print_tree(self):
-        pass
+    def print(self):
+        self.print_tree(self.root)
+    def print_tree(self, elm, lvl = 0):
+        if elm == {}:
+            return '*'
+        else:
+            self.print_tree(elm.mother, lvl=lvl+1)
+            print('   ' * lvl + '> ' + elm.name)
+            self.print_tree(elm.father, lvl=lvl+1)
+    
